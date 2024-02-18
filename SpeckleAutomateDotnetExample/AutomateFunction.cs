@@ -11,19 +11,7 @@ public static class AutomateFunction
     FunctionInputs functionInputs
   )
   {
-    Console.WriteLine("Starting execution");
-    _ = typeof(ObjectsKit).Assembly; // INFO: Force objects kit to initialize
-
-    Console.WriteLine("Receiving version");
-    var commitObject = await automationContext.ReceiveVersion();
-
-    Console.WriteLine("Received version: " + commitObject);
-
-    var count = commitObject
-      .Flatten()
-      .Count(b => b.speckle_type == functionInputs.SpeckleTypeToCount);
-
-    Console.WriteLine($"Counted {count} objects");
-    automationContext.MarkRunSuccess($"Counted {count} objects");
+    Speckle.Core.Models.Base latestVersion = await automationContext.ReceiveVersion();
+    await automationContext.CreateNewVersionInProject(latestVersion, functionInputs.TargetModelName, "Automated push by CopyPaster");
   }
 }
