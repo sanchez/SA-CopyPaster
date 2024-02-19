@@ -11,6 +11,7 @@ public static class AutomateFunction
     FunctionInputs functionInputs
   )
   {
+    new Objects.Geometry.Line();
     Speckle.Core.Models.Base latestVersion = await automationContext.ReceiveVersion();
     await automationContext.CreateNewVersionInProject(latestVersion, functionInputs.TargetModelName, "Automated push by CopyPaster");
   }
